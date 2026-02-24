@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-slate-50 text-slate-900 antialiased;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3 {
+    @apply tracking-tight;
+  }
+}
+
+@layer components {
+  .page-shell {
+    @apply space-y-5;
+  }
+
+  .page-header {
+    @apply rounded-2xl border border-slate-200 bg-white/90 p-5 shadow-sm;
+  }
+
+  .page-title {
+    @apply text-2xl font-semibold text-slate-900;
+  }
+
+  .page-subtitle {
+    @apply mt-1 text-sm text-slate-600;
+  }
+
+  .soft-badge {
+    @apply rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold tracking-wide text-brand-700;
+  }
+
+  .state-error {
+    @apply rounded-xl border border-red-100 bg-red-50 px-4 py-2.5 text-sm text-red-700;
+  }
+
+  .state-info {
+    @apply rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-600;
+  }
+
+  .tab-pill {
+    @apply rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-100;
+  }
+
+  .tab-pill-active {
+    @apply border-transparent bg-brand-500 text-white hover:bg-brand-600;
+  }
+
+  .tone-success {
+    @apply rounded-full bg-success-50 px-3 py-1 text-xs font-semibold text-success-600;
+  }
+
+  .tone-warning {
+    @apply rounded-full bg-warning-50 px-3 py-1 text-xs font-semibold text-warning-600;
+  }
+}
