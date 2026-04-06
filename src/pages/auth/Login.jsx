@@ -39,12 +39,6 @@ function Login() {
             <img src={logo} alt="Mindful U" className="h-20 w-20 rounded-2xl border border-slate-200 object-cover" />
           </div>
           <p className="mb-6 text-sm text-slate-600">Login to access your Mindful U dashboard.</p>
-          <div className="mb-6 rounded-lg border border-brand-100 bg-brand-50 p-3 text-xs text-slate-700">
-            <p className="font-semibold text-slate-800">Starter Accounts</p>
-            <p className="mt-1">Student: student@wellness.local / Student@123</p>
-            <p>Admin: admin@wellness.local / Admin@123</p>
-          </div>
-
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="mb-1 block text-sm font-medium text-slate-700" htmlFor="email">

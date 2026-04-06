@@ -15,6 +15,7 @@ import MyPrograms from './pages/student/MyPrograms';
 import Programs from './pages/student/Programs';
 import Resources from './pages/student/Resources';
 import Support from './pages/student/Support';
+import UserManagement from './pages/student/UserManagement';
 
 function AppLayout({ children }) {
   const { user } = useAuth();
@@ -98,6 +99,14 @@ function App() {
           element={
             <AppLayout>
               <Support />
+            </AppLayout>
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <AppLayout>
+              <UserManagement />
             </AppLayout>
           }
         />

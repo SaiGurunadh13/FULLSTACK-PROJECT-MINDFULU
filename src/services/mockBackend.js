@@ -145,62 +145,8 @@ const asData = (payload) => [200, { data: payload }];
 
 export const setupMockBackend = (api) => {
   const mock = new MockAdapter(api, { delayResponse: 350 });
-
-  mock.onPost('/auth/login').reply((config) => {
-    const db = readDb();
-    const { email, password } = parseBody(config);
-    const normalizedEmail = (email || '').trim().toLowerCase();
-
-    const user = db.users.find(
-      (candidate) => candidate.email.toLowerCase() === normalizedEmail && candidate.password === password
-    );
-
-    if (!user) {
-      return [401, { message: 'Invalid email or password' }];
-    }
-
-    db.usage.dailyLogins += 1;
-    writeDb(db);
-
-    return [
-      200,
-      {
-        token: `mock-token-${user.role.toLowerCase()}-${Date.now()}`,
-        user: {
-          email: user.email,
-          role: user.role,
-          name: user.name,
-        },
-      },
-    ];
-  });
-
-  mock.onPost('/auth/register').reply((config) => {
-    const db = readDb();
-    const payload = parseBody(config);
-    const normalizedEmail = (payload.email || '').trim().toLowerCase();
-
-    if (!payload.email || !payload.password || !payload.name) {
-      return [400, { message: 'Name, email, and password are required.' }];
-    }
-
-    const exists = db.users.some((user) => user.email.toLowerCase() === normalizedEmail);
-
-    if (exists) {
-      return [409, { message: 'Account already exists for this email.' }];
-    }
-
-    db.users.push({
-      email: normalizedEmail,
-      password: payload.password,
-      role: payload.role || 'STUDENT',
-      name: payload.name,
-    });
-
-    writeDb(db);
-
-    return [201, { message: 'Account created successfully.' }];
-  });
+  mock.onPost('/auth/login').passThrough();
+  mock.onPost('/auth/register').passThrough();
 
   mock.onGet('/resources').reply((config) => {
     const db = readDb();

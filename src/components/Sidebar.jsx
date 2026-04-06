@@ -6,6 +6,7 @@ const studentLinks = [
   { to: '/programs', label: 'Programs' },
   { to: '/my-programs', label: 'My Programs' },
   { to: '/support', label: 'Support' },
+  { to: '/users', label: 'User Management' },
 ];
 
 const adminLinks = [
