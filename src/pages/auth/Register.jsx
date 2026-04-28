@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
+import CaptchaField, { createCaptchaChallenge } from '../../components/CaptchaField';
 import Card from '../../components/Card';
 import { useAuth } from '../../context/AuthContext';
 import logo from '../../assets/logo.jpeg';
@@ -15,21 +16,47 @@ function Register() {
     role: 'STUDENT',
   });
   const [error, setError] = useState('');
+  const [captcha, setCaptcha] = useState(createCaptchaChallenge);
+  const [captchaValue, setCaptchaValue] = useState('');
+  const [captchaError, setCaptchaError] = useState('');
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setForm((previous) => ({ ...previous, [name]: value }));
   };
 
+  const handleCaptchaChange = (event) => {
+    setCaptchaValue(event.target.value);
+    if (captchaError) {
+      setCaptchaError('');
+    }
+  };
+
+  const handleCaptchaRefresh = () => {
+    setCaptcha(createCaptchaChallenge());
+    setCaptchaValue('');
+    setCaptchaError('');
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError('');
+    setCaptchaError('');
+
+    if (captchaValue.trim().toUpperCase() !== captcha.answer) {
+      setCaptchaError('Please solve the captcha correctly.');
+      setCaptchaValue('');
+      setCaptcha(createCaptchaChallenge());
+      return;
+    }
 
     try {
       await register(form);
       navigate('/login', { replace: true });
     } catch (submitError) {
       setError(submitError.response?.data?.message || 'Unable to register account.');
+      setCaptchaValue('');
+      setCaptcha(createCaptchaChallenge());
     }
   };
 
@@ -105,6 +132,14 @@ function Register() {
                 <option value="ADMIN">Admin</option>
               </select>
             </div>
+
+            <CaptchaField
+              value={captchaValue}
+              onChange={handleCaptchaChange}
+              challenge={captcha}
+              onRefresh={handleCaptchaRefresh}
+              error={captchaError}
+            />
 
             {error ? <p className="text-sm text-red-600">{error}</p> : null}
 
